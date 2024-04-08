@@ -1,0 +1,17 @@
+body {
+    height: 100vh;
+}
+
+#options {
+    width: 200px;
+    height: 100%;
+    background-color: rgb(203, 212, 220);
+    display: inline-block;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#grid-container {
+    display: inline-block;
+    width: 80%;
+    background-color: antiquewhite;
+}
