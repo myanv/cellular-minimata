@@ -10,9 +10,7 @@ public enum State { ALIVE(1), DEAD(0);
         }
         this.value = value;
     }
-
     public int getState() {
         return value;
     }
-
 }

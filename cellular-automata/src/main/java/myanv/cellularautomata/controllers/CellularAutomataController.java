@@ -39,7 +39,6 @@ public class CellularAutomataController {
     public int[][] getCellularAutomataGrid(@RequestParam int rows, @RequestParam int columns) {
         // Create a 2D array to represent the cellular automata grid
         CellularAutomataGrid grid = new CellularAutomataGrid(rows, columns);
-        grid.initialiseStateGrid();
         return grid.getStateGridAsInt();
     }
     

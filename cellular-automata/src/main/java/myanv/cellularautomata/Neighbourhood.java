@@ -9,30 +9,44 @@ import org.springframework.stereotype.Service;
 // * and count the number of live cells.
 
 @Service
-public class Neighbourhood extends CellularAutomataGrid {
+public class Neighbourhood {
 
-    // Initialises the index of the element in the array, its state, and its neighbourhood
+    // Initialises the index of the element in the array, its state, and its neighbourhood.
     private int ith = 0;
     private int jth = 0;
+    private int rows = 0;
+    private int columns = 0;
     private ArrayList<State> neighbourhood = new ArrayList<>();
 
-    public Neighbourhood(int rows, int columns, int ith, int jth) {
-        super(rows, columns);
+    public Neighbourhood(int rows, int columns, int ith, int jth, State[][] previousStateGrid) {
+        if (ith < 0 || jth < 0 || ith >= rows || jth >= columns) {
+            throw new IllegalArgumentException("Illegal indices!");
+        }
         this.ith = ith;
         this.jth = jth;
-        getNeighbourhood();
+        this.rows = rows;
+        this.columns = columns;
+        initialiseNeighbourhood(previousStateGrid);
     }
-    public ArrayList<State> getNeighbourhood() {
-        neighbourhood.clear(); // Clears the neighbourhood array -> maybe integrate with DB for storage
+    
+    // * This method initialises the neighbourhood. It takes a State[][] grid (let it be A)
+    // * and loops over the elements surrounding A[ith][jth], appending them to the neighbourhood ArrayList.
+
+    public void initialiseNeighbourhood(State[][] grid) {
+
+        // Clears the neighbourhood array everytime the method is called
+        neighbourhood.clear(); 
+
         for (int i = ith - 1; i <= ith + 1; i++) {
             for (int j = jth - 1; j <= jth + 1; j++) {
                 if (i >= 0 && i < rows && j >= 0 && j < columns && !(i == ith && j == jth)) {
-                    neighbourhood.add(super.getState(i, j));
+                    neighbourhood.add(grid[i][j]);
                 }
             }
         }
-        return neighbourhood;
     }
+
+    // * Counts the number of live neighbours in the neighbourhood ArrayList.
     public int countLiveNeighbours() {
         return neighbourhood.stream()
                 .mapToInt(State::getState)
