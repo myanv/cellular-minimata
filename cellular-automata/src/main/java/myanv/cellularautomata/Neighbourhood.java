@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
+// * This class will implement the neighbour-finding logic of cellular automata
+// * Its main function is to create an array of 8 neighbouring elements
+// * and count the number of live cells.
+
 @Service
 public abstract class Neighbourhood extends CellularAutomataGrid {
     

@@ -1,7 +1,6 @@
 package myanv.cellularautomata;
 
-import org.springframework.stereotype.Component;
-
+// * This enum stores the two possible cell states - alive and dead
 enum State { ALIVE(1), DEAD(0);
     private final int value;
 

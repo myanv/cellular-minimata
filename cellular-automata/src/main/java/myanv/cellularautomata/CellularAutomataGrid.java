@@ -2,10 +2,16 @@ package myanv.cellularautomata;
 
 import java.util.stream.*;
 
-import org.springframework.stereotype.Component;;
+import org.springframework.stereotype.Component;
+
+// * This is the main class for handling the cellular automata logic.
+// * It creates a 2D array filled with random states.    
+// * Then converts to an integer array to pass to the controller.
 
 @Component
 public class CellularAutomataGrid {
+
+    // Initialises the number of rows and columns, as well as the state grid
     protected int rows = 10;
     protected int columns = 10;
     protected State[][] stateGrid = new State[rows][columns];
@@ -20,6 +26,7 @@ public class CellularAutomataGrid {
     public State[][] getStateGrid() {
         return stateGrid;
     }
+
     public void initialiseStateGrid() {
         stateGrid = IntStream.range(0, rows)
             .mapToObj(i -> IntStream.range(0, columns)
@@ -27,6 +34,7 @@ public class CellularAutomataGrid {
                         .toArray(State[]::new))
             .toArray(State[][]::new);
     }
+    
     public int[][] getStateGridAsInt() {
         int[][] intGrid = new int[rows][columns];
         for (int i = 0; i < rows; i++) {
