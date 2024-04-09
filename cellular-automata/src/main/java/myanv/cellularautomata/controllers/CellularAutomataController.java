@@ -42,4 +42,5 @@ public class CellularAutomataController {
         grid.initialiseStateGrid();
         return grid.getStateGridAsInt();
     }
+    
 }

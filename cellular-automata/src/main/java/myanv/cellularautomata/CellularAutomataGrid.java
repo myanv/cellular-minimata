@@ -14,13 +14,14 @@ public class CellularAutomataGrid {
     // Initialises the number of rows and columns, as well as the state grid
     protected int rows = 10;
     protected int columns = 10;
-    protected State[][] stateGrid = new State[rows][columns];
+    protected State[][] stateGrid;
 
     public CellularAutomataGrid() {}
 
     public CellularAutomataGrid(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
+        initialiseStateGrid();
     }
 
     public State[][] getStateGrid() {
@@ -28,13 +29,14 @@ public class CellularAutomataGrid {
     }
 
     public void initialiseStateGrid() {
-        stateGrid = IntStream.range(0, rows)
-            .mapToObj(i -> IntStream.range(0, columns)
-                        .mapToObj(j -> Math.random() > 0.5 ? State.ALIVE : State.DEAD)
-                        .toArray(State[]::new))
-            .toArray(State[][]::new);
+        stateGrid = new State[rows][columns];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                stateGrid[i][j] = Math.random() > 0.5 ? State.ALIVE : State.DEAD;
+            }
+        }
     }
-    
+
     public int[][] getStateGridAsInt() {
         int[][] intGrid = new int[rows][columns];
         for (int i = 0; i < rows; i++) {
@@ -49,5 +51,34 @@ public class CellularAutomataGrid {
     }
     public void setState(int i, int j, State state) {
         stateGrid[i][j] = state;
+    }
+    public void mutate() {
+        State[][] newStateGrid = new State[rows][columns];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                Neighbourhood neighbourhood = new Neighbourhood(rows, columns, i, j);
+                int numberOfNeighbours = neighbourhood.countLiveNeighbours();
+
+                switch (stateGrid[i][j]) {
+                    case ALIVE:
+                        if (numberOfNeighbours < 2 || numberOfNeighbours > 3) {
+                            newStateGrid[i][j] = State.DEAD;
+                        } else {
+                            newStateGrid[i][j] = State.ALIVE;
+                        }
+                        break;
+                    case DEAD:
+                        if (numberOfNeighbours == 3) {
+                            newStateGrid[i][j] = State.ALIVE;
+                        } else {
+                            newStateGrid[i][j] = State.DEAD;
+                        }
+                        break;
+                }
+            }
+        }
+
+        stateGrid = newStateGrid;
     }
 }

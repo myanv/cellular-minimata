@@ -1,7 +1,7 @@
 package myanv.cellularautomata;
 
 // * This enum stores the two possible cell states - alive and dead
-enum State { ALIVE(1), DEAD(0);
+public enum State { ALIVE(1), DEAD(0);
     private final int value;
 
     private State(int value) {
