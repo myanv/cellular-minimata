@@ -4,6 +4,8 @@
 
 package myanv.cellularautomata.controllers;
 
+import myanv.cellularautomata.CellularAutomataGrid;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
@@ -36,15 +38,8 @@ public class CellularAutomataController {
     @GetMapping("/grid")
     public int[][] getCellularAutomataGrid(@RequestParam int rows, @RequestParam int columns) {
         // Create a 2D array to represent the cellular automata grid
-        int[][] grid = new int[rows][columns];
-    
-        // Initialize the grid with some starting values
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                grid[i][j] = Math.random() > 0.5 ? 1 : 0;
-            }
-        }
-    
-        return grid;
+        CellularAutomataGrid grid = new CellularAutomataGrid(rows, columns);
+        grid.initialiseStateGrid();
+        return grid.getStateGridAsInt();
     }
 }

@@ -19,22 +19,23 @@ startButton.addEventListener("click", async () => {
 
     const response = await fetch(`/api/cellular-automata/grid?rows=${rows}&columns=${columns}`);
     const grid = await response.json();
-    console.table(grid);
     draw(grid);
 });
 
 function draw(grid) {
-    background(0);
+    background(255);
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < columns; j++) {
             let y = i * resolution;
             let x = j * resolution;
             if (grid[i][j] == 1) {
-                fill(255);
+                fill(0);
+                stroke(255);
                 rect(x, y, resolution, resolution);
             }
         }
     }
+    
 }
 
 
