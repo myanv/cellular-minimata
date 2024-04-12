@@ -23,7 +23,7 @@ startButton.addEventListener("click", async () => {
 
     draw(grid);
 
-    setTimeout(async function () { 
+    for (let i = 0; i < steps; i++) { 
         response = await fetch(`/api/cellular-automata/mutate?intGrid=${grid}`, {
             method: 'POST',
             headers: {
@@ -32,10 +32,9 @@ startButton.addEventListener("click", async () => {
             body: JSON.stringify(grid)
         });
         grid = await response.json();
-        console.table(grid);
-        
+        await delay(100);
         draw(grid);
-    }, 300);
+    };
 });
 
 function draw(grid) {
@@ -51,7 +50,10 @@ function draw(grid) {
             }
         }
     }
-    
 }
 
-
+function delay(milliseconds) {
+    return new Promise(resolve => {
+        setTimeout(resolve, milliseconds);
+    });
+}
