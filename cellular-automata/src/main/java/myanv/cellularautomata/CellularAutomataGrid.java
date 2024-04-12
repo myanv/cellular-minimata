@@ -1,7 +1,4 @@
 package myanv.cellularautomata;
-
-import java.util.stream.*;
-
 import org.springframework.stereotype.Component;
 
 // * This is the main class for handling the cellular automata logic.
@@ -20,41 +17,46 @@ public class CellularAutomataGrid {
 
     public CellularAutomataGrid() {}
 
+    // * This constructor is intended to be used to update the state grid passed as parameter.
+
+    public CellularAutomataGrid(State[][] grid) {
+        this.stateGrid = grid;
+        this.rows = grid.length;
+        this.columns = grid[0].length; 
+        initialisePrevGrid();       
+    }
+
+    // * This constructor is intended to be used to create the very first state grid.
+
     public CellularAutomataGrid(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
-        initialiseStateGrids();
+        initialiseStateGrid();
+        initialisePrevGrid();
     }
+
+    // * Returns the state grid.
 
     public State[][] getStateGrid() {
         return stateGrid;
     }
 
-    // * Creates a state grid/previous state grid with the desired dimensions
+    // * Creates a state grid with the desired dimensions
     // * Then fill them with random 1s and 0s, representing the ALIVE or DEAD states of the cells. 
     
-    public void initialiseStateGrids() {
+    public void initialiseStateGrid() {
         stateGrid = new State[rows][columns];
-        previousStateGrid = new State[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 stateGrid[i][j] = Math.random() > 0.5 ? State.ALIVE : State.DEAD;
-                previousStateGrid[i][j] = stateGrid[i][j];
             }
         }
     }
 
-    // * This method is to convert the State[][] grid to a int[][] grid 
-    // * for easier passing to the front-end JavaScript.
-
-    public int[][] getStateGridAsInt() {
-        int[][] intGrid = new int[rows][columns];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                intGrid[i][j] = stateGrid[i][j].getState();
-            }
-        }
-        return intGrid;
+    // * Creates a previous state grid to store the previous states of each cell.
+    public void initialisePrevGrid() {
+        previousStateGrid = new State[rows][columns];
+        updatePreviousStateGrid();
     }
 
     // * This method updates the previous state grid so that each mutation take into account

@@ -1,18 +1,12 @@
-
-
-
-
 package myanv.cellularautomata.controllers;
 
 import myanv.cellularautomata.CellularAutomataGrid;
+import myanv.cellularautomata.State;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -22,7 +16,9 @@ import org.springframework.web.filter.CorsFilter;
 @RestController
 @RequestMapping("/api/cellular-automata")
 public class CellularAutomataController {
-
+    
+    // * CORS configuration for the browser.
+    
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -35,11 +31,22 @@ public class CellularAutomataController {
         return new CorsFilter(source);
     }
 
-    @GetMapping("/grid")
-    public int[][] getCellularAutomataGrid(@RequestParam int rows, @RequestParam int columns) {
-        // Create a 2D array to represent the cellular automata grid
-        CellularAutomataGrid grid = new CellularAutomataGrid(rows, columns);
-        return grid.getStateGridAsInt();
-    }
+    // * HTTP request: GET
+    // * Receives parameters rows and columns from the front-end and creates an initial the 2D state grid.
     
+    @GetMapping("/grid")
+    public State[][] getCellularAutomataGrid(@RequestParam int rows, @RequestParam int columns) {
+        CellularAutomataGrid grid = new CellularAutomataGrid(rows, columns);
+        return grid.getStateGrid();
+    }
+
+    // * HTTP request: POST
+    // * Receives the body of an array from the front-end, mutates it, then returns the mutated state grid. 
+    
+    @PostMapping("/mutate")
+    public State[][] mutate(@RequestBody State[][] grid) {
+        CellularAutomataGrid stateGrid = new CellularAutomataGrid(grid);
+        stateGrid.mutate();
+        return stateGrid.getStateGrid();
+    }
 }

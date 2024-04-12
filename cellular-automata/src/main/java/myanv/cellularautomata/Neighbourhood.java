@@ -1,7 +1,6 @@
 package myanv.cellularautomata;
 
 import java.util.ArrayList;
-
 import org.springframework.stereotype.Service;
 
 // * This class will implement the neighbour-finding logic of cellular automata
@@ -11,13 +10,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class Neighbourhood {
 
-    // Initialises the index of the element in the array, its state, and its neighbourhood.
+    // * Initialises the index of the element in the array, its state, and its neighbourhood.
+    
     private int ith = 0;
     private int jth = 0;
     private int rows = 0;
     private int columns = 0;
     private ArrayList<State> neighbourhood = new ArrayList<>();
 
+    public Neighbourhood() {}
+
+    // * Initialises a Neighbourhood object with the desired parameters.
     public Neighbourhood(int rows, int columns, int ith, int jth, State[][] previousStateGrid) {
         if (ith < 0 || jth < 0 || ith >= rows || jth >= columns) {
             throw new IllegalArgumentException("Illegal indices!");
@@ -34,7 +37,7 @@ public class Neighbourhood {
 
     public void initialiseNeighbourhood(State[][] grid) {
 
-        // Clears the neighbourhood array everytime the method is called
+        // * Clears the neighbourhood array everytime the method is called
         neighbourhood.clear(); 
 
         for (int i = ith - 1; i <= ith + 1; i++) {
