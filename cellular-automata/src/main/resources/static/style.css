@@ -8,7 +8,7 @@ body {
     z-index: 99;
     width: 220px;
     height: 100vh;
-    background-color: rgb(164, 224, 220);
+    background-image: linear-gradient(rgb(164, 224, 220), rgb(164, 183, 226));
     float: left;
     display: fixed;
     padding-left: 10px;
@@ -40,7 +40,7 @@ button {
 }
 
 button:hover {
-    background-color: rgb(225, 253, 251);
+    background-color: rgb(215, 221, 249);
 }
 
 canvas {
