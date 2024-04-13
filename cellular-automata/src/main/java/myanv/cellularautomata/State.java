@@ -1,3 +1,5 @@
+// @ https://github.com/myanv/cellular-minimata
+
 package myanv.cellularautomata;
 
 // * This enum stores the two possible cell states - alive and dead

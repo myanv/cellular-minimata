@@ -1,3 +1,6 @@
+// * Controller for the cellular automata application
+// @ https://github.com/myanv/cellular-minimata
+
 package myanv.cellularautomata.controllers;
 
 import myanv.cellularautomata.CellularAutomataGrid;
@@ -5,9 +8,7 @@ import myanv.cellularautomata.State;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;

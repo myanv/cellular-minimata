@@ -1,3 +1,5 @@
+// @ https://github.com/myanv/cellular-minimata
+
 package myanv.cellularautomata;
 
 import java.util.ArrayList;

@@ -1,11 +1,15 @@
-// CellularAutomata.js
+// @ https://github.com/myanv/cellular-minimata
 
 // Get the start button and define the canvas
 const startButton = document.getElementById("start-btn");
 const gridContainer = document.getElementById("grid-container");
-let rows = 10;
-let columns = 10;
-let resolution = 50;
+
+// Default parameter values
+let rows = 25;
+let columns = 25;
+let resolution = 40;
+let steps = 150;
+let rules = document.getElementById("rules").value;
 
 // Function to handle the start button click
 startButton.addEventListener("click", async () => {
@@ -13,7 +17,9 @@ startButton.addEventListener("click", async () => {
     columns = document.getElementById("columns").valueAsNumber;
     resolution = document.getElementById("resolution").valueAsNumber;
     steps = document.getElementById("steps").valueAsNumber;
-
+    rules = document.getElementById("rules").value;
+    let ruleset = rules.split(/\n+/);
+    
     // Create a dynamic canvas using the p5.js library
     createCanvas(columns * resolution, rows * resolution);
     // checkIfValid(canvas)
