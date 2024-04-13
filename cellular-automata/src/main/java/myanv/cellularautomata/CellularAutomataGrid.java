@@ -103,4 +103,20 @@ public class CellularAutomataGrid {
         }
         updatePreviousStateGrid();
     }
+
+    public void mutate(Rule[] ruleset) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                Neighbourhood neighbourhood = new Neighbourhood(rows, columns, i, j, previousStateGrid);
+                int numberOfNeighbours = neighbourhood.countLiveNeighbours();
+
+                for (Rule r : ruleset) {
+                    if (previousStateGrid[i][j] == r.getStartState() && r.evaluateCondition(numberOfNeighbours)) {
+                        stateGrid[i][j] = r.getEndState();
+                    }
+                }
+            }
+        }
+        updatePreviousStateGrid();
+    }
 }

@@ -5,7 +5,9 @@ package myanv.cellularautomata.controllers;
 
 import myanv.cellularautomata.CellularAutomataGrid;
 import myanv.cellularautomata.State;
+import myanv.cellularautomata.Rule;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.*;
@@ -42,12 +44,21 @@ public class CellularAutomataController {
     }
 
     // * HTTP request: POST
-    // * Receives the body of an array from the front-end, mutates it, then returns the mutated state grid. 
+    // * Receives the body of an array (automatically parsing from JSON by @RequestBody) from the front-end, mutates it, then returns the mutated state grid. 
     
+    /*
     @PostMapping("/mutate")
     public State[][] mutate(@RequestBody State[][] grid) {
         CellularAutomataGrid stateGrid = new CellularAutomataGrid(grid);
         stateGrid.mutate();
         return stateGrid.getStateGrid();
+    }
+    */
+
+    @PostMapping("/mutate")
+    public ResponseEntity<State[][]> mutate(@RequestBody State[][] grid, @RequestBody Rule[] ruleset) {
+        CellularAutomataGrid stateGrid = new CellularAutomataGrid(grid);
+        stateGrid.mutate(ruleset);
+        return ResponseEntity.ok(stateGrid.getStateGrid());
     }
 }

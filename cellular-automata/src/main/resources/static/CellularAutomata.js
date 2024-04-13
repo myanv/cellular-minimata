@@ -18,24 +18,30 @@ startButton.addEventListener("click", async () => {
     resolution = document.getElementById("resolution").valueAsNumber;
     steps = document.getElementById("steps").valueAsNumber;
     rules = document.getElementById("rules").value;
-    let ruleset = rules.split(/\n+/);
+
+    let ruleset = parseRuleset(rules);
     
     // Create a dynamic canvas using the p5.js library
     createCanvas(columns * resolution, rows * resolution);
-    // checkIfValid(canvas)
 
-    let response = await fetch(`/api/cellular-automata/grid?rows=${rows}&columns=${columns}`, { method: 'GET' });
+    let response = await fetch(`/api/cellular-automata/grid?rows=${rows}&columns=${columns}`, { 
+        method: 'GET' 
+    });
     let grid = await response.json();
 
     draw(grid);
 
     for (let i = 0; i < steps; i++) { 
-        response = await fetch(`/api/cellular-automata/mutate?intGrid=${grid}`, {
+        response = await fetch(`/api/cellular-automata/mutate`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(grid)
+            body: JSON.stringify({ grid, ruleset: ruleset.map(rule => ({
+                startState: rule.startState,
+                condition: rule.condition,
+                endState: rule.endState
+            }))})
         });
         grid = await response.json();
         await delay(100);
@@ -62,4 +68,27 @@ function delay(milliseconds) {
     return new Promise(resolve => {
         setTimeout(resolve, milliseconds);
     });
+}
+
+function parseRuleset(rules) {
+    const ruleset = rules.split(/\n+/);
+    const parsedRules = [];
+
+    for (const rule of ruleset) {
+        const [startState, condition, endState] = rule.split(' ');
+        
+        // if (responseValidation([startState, condition, endState])) {
+            // * Then continue as below
+        // } else {
+            // * Throw an exception
+        // } 
+
+        parsedRules.push({
+            startState,
+            condition,
+            endState,
+          });
+        }
+    console.log(parsedRules);
+    return parsedRules;
 }
