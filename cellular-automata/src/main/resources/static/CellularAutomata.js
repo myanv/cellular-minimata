@@ -24,24 +24,21 @@ startButton.addEventListener("click", async () => {
     // Create a dynamic canvas using the p5.js library
     createCanvas(columns * resolution, rows * resolution);
 
-    let response = await fetch(`/api/cellular-automata/grid?rows=${rows}&columns=${columns}`, { 
-        method: 'GET' 
-    });
+    let response = await fetch(`/api/cellular-automata/grid?rows=${rows}&columns=${columns}`, { method: 'GET' });
     let grid = await response.json();
 
     draw(grid);
-
+    
     for (let i = 0; i < steps; i++) { 
         response = await fetch(`/api/cellular-automata/mutate`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ grid, ruleset: ruleset.map(rule => ({
-                startState: rule.startState,
-                condition: rule.condition,
-                endState: rule.endState
-            }))})
+            body: JSON.stringify({ 
+                grid: grid,
+                ruleset: ruleset
+            })
         });
         grid = await response.json();
         await delay(100);
@@ -88,7 +85,7 @@ function parseRuleset(rules) {
             condition,
             endState,
           });
+        
         }
-    console.log(parsedRules);
     return parsedRules;
 }

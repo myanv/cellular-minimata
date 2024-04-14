@@ -19,7 +19,7 @@ class Equals extends Relation {
     }
     @Override
     public boolean evaluate(int numberOfNeighbours) {
-        String[] stringOperands = condition.substring(1).split(",");
+        String[] stringOperands = condition.substring(2).split(",");
         int[] operands = Arrays.stream(stringOperands)
                             .mapToInt(i -> Integer.parseInt(i))
                             .toArray();

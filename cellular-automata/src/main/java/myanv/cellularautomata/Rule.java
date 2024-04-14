@@ -9,6 +9,12 @@ public class Rule {
     private State endState;
 
     public Rule() {}
+
+    public Rule(RuleDTO ruleDTO) {
+        this.startState = State.valueOf(ruleDTO.getStartState());
+        this.condition = createRelation(ruleDTO.getCondition());
+        this.endState = State.valueOf(ruleDTO.getEndState());
+    }
     
     public Rule(String startState, String stringCondition, String endState) {
         this.startState = State.valueOf(startState.toUpperCase());

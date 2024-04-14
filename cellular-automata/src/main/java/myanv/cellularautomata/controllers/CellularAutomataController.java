@@ -4,8 +4,12 @@
 package myanv.cellularautomata.controllers;
 
 import myanv.cellularautomata.CellularAutomataGrid;
+import myanv.cellularautomata.RequestWrapper;
 import myanv.cellularautomata.State;
 import myanv.cellularautomata.Rule;
+import myanv.cellularautomata.RuleDTO;
+
+import java.util.Arrays;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.context.annotation.Bean;
@@ -55,10 +59,18 @@ public class CellularAutomataController {
     }
     */
 
+    // Since Spring doesn't support using @RequestBody more than once in a method parameter list,
+    // create a request wrapper class to accept both parameters.
+
     @PostMapping("/mutate")
-    public ResponseEntity<State[][]> mutate(@RequestBody State[][] grid, @RequestBody Rule[] ruleset) {
-        CellularAutomataGrid stateGrid = new CellularAutomataGrid(grid);
-        stateGrid.mutate(ruleset);
-        return ResponseEntity.ok(stateGrid.getStateGrid());
+    public State[][] mutate(@RequestBody RequestWrapper request) {
+        CellularAutomataGrid stateGrid = new CellularAutomataGrid(request.getGrid());
+        RuleDTO[] ruleset = request.getRuleset();
+        Rule[] rules = Arrays.stream(ruleset)
+                             .map(Rule::new) // Create Rule objects from RuleDTO
+                             .toArray(Rule[]::new);
+        stateGrid.mutate(rules);
+        return stateGrid.getStateGrid();
     }
 }
+
