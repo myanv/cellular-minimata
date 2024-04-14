@@ -42,35 +42,24 @@ public class CellularAutomataController {
     // * Receives parameters rows and columns from the front-end and creates an initial the 2D state grid.
     
     @GetMapping("/grid")
-    public State[][] getCellularAutomataGrid(@RequestParam int rows, @RequestParam int columns) {
+    public ResponseEntity<State[][]> getCellularAutomataGrid(@RequestParam int rows, @RequestParam int columns) {
         CellularAutomataGrid grid = new CellularAutomataGrid(rows, columns);
-        return grid.getStateGrid();
+        return ResponseEntity.ok(grid.getStateGrid());
     }
 
     // * HTTP request: POST
-    // * Receives the body of an array (automatically parsing from JSON by @RequestBody) from the front-end, mutates it, then returns the mutated state grid. 
-    
-    /*
-    @PostMapping("/mutate")
-    public State[][] mutate(@RequestBody State[][] grid) {
-        CellularAutomataGrid stateGrid = new CellularAutomataGrid(grid);
-        stateGrid.mutate();
-        return stateGrid.getStateGrid();
-    }
-    */
-
-    // Since Spring doesn't support using @RequestBody more than once in a method parameter list,
-    // create a request wrapper class to accept both parameters.
+    // * Receives the body of an array (automatically parsing from JSON by @RequestBody) from the front-end and the ruleset, mutates it accordingly
+    // * then returns the mutated state grid. 
 
     @PostMapping("/mutate")
-    public State[][] mutate(@RequestBody RequestWrapper request) {
+    public ResponseEntity<State[][]> mutate(@RequestBody RequestWrapper request) {
         CellularAutomataGrid stateGrid = new CellularAutomataGrid(request.getGrid());
         RuleDTO[] ruleset = request.getRuleset();
         Rule[] rules = Arrays.stream(ruleset)
                              .map(Rule::new) // Create Rule objects from RuleDTO
                              .toArray(Rule[]::new);
         stateGrid.mutate(rules);
-        return stateGrid.getStateGrid();
+        return ResponseEntity.ok(stateGrid.getStateGrid());
     }
 }
 

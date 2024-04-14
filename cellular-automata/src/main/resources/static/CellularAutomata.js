@@ -71,7 +71,8 @@ function parseRuleset(rules) {
     const ruleset = rules.split(/\n+/);
     const parsedRules = [];
 
-    for (const rule of ruleset) {
+    for (let rule of ruleset) {
+        rule = rule.toUpperCase();
         const [startState, condition, endState] = rule.split(' ');
         
         // if (responseValidation([startState, condition, endState])) {

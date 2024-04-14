@@ -1,13 +1,11 @@
 // @ https://github.com/myanv/cellular-minimata
 
 package myanv.cellularautomata;
-import org.springframework.stereotype.Component;
 
 // * This is the main class for handling the cellular automata logic.
 // * It creates a 2D array filled with random states.    
 // * Then converts to an integer array to pass to the controller.
 
-@Component
 public class CellularAutomataGrid {
 
     // * Initialises the number of rows and columns, as well as the current/previous state grids.
@@ -75,34 +73,8 @@ public class CellularAutomataGrid {
 
     // * This method handles the mutation logic of the cellular automata
     // * Let A be the 2D array. First, it creates a neighbourhood of A[i][j] and then counts
-    // * the number of live cells, afterwards applies to rules to determine if a[i][j] is alive or dead.
-    
-    public void mutate() {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                Neighbourhood neighbourhood = new Neighbourhood(rows, columns, i, j, previousStateGrid);
-                int numberOfNeighbours = neighbourhood.countLiveNeighbours();
-
-                switch (previousStateGrid[i][j]) {
-                    case ALIVE:
-                        if (numberOfNeighbours < 2 || numberOfNeighbours > 3) {
-                            stateGrid[i][j] = State.DEAD;
-                        } else {
-                            stateGrid[i][j] = State.ALIVE;
-                        }
-                        break;
-                    case DEAD:
-                        if (numberOfNeighbours == 3) {
-                            stateGrid[i][j] = State.ALIVE;
-                        } else {
-                            stateGrid[i][j] = State.DEAD;
-                        }
-                        break;
-                }
-            }
-        }
-        updatePreviousStateGrid();
-    }
+    // * the number of live cells, afterwards applies to rules to determine if a[i][j] is alive or dead
+    // * according to the ruleset passed to it.
 
     public void mutate(Rule[] ruleset) {
         for (int i = 0; i < rows; i++) {

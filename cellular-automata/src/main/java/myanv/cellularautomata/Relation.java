@@ -1,9 +1,12 @@
+// @ https://github.com/myanv/cellular-minimata
+
 package myanv.cellularautomata;
 
 import java.util.Arrays;
-import org.springframework.stereotype.Service;
 
-@Service
+// * This abstract class defines the operations/conditions used in the
+// * ruleset set by the user.
+
 abstract class Relation {
     protected String condition;
 
@@ -11,6 +14,9 @@ abstract class Relation {
         this.condition = condition;
     }
     public abstract boolean evaluate(int numberOfNeighbours);
+    public String toString() {
+        return condition;
+    }
 }
 
 class Equals extends Relation {

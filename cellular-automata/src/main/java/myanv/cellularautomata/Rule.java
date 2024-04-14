@@ -1,8 +1,11 @@
+// @ https://github.com/myanv/cellular-minimata
+
 package myanv.cellularautomata;
 
-import org.springframework.stereotype.Service;;
+// * This class defines the rules of the cellular automata.
+// * A rule is composed of a start state, a condition, and an end state
+// * (e.g. "alive <3 dead" reads as "if a cell is alive and has less than 3 live neighbours, then it dies."
 
-@Service
 public class Rule {
     private State startState;
     private Relation condition;
@@ -25,10 +28,16 @@ public class Rule {
     public State getEndState() {
         return endState;
     }
-    
+
+    public Relation getCondition() {
+        return condition;
+    }
+
     public State getStartState() {
         return startState;
     }
+
+    // * Initialises the relation/condition using subclasses of the Relation abstract class
 
     public Relation createRelation(String stringCondition) {
         if (stringCondition.startsWith("<")) {
@@ -39,6 +48,8 @@ public class Rule {
             return new Equals(stringCondition);
         }
     }
+
+    // * Evaluates the condition.
 
     public boolean evaluateCondition(int numberOfNeighbours) {
         return condition.evaluate(numberOfNeighbours);
