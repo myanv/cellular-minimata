@@ -82,7 +82,7 @@ startButton.addEventListener("click", async () => {
             })
         });
         grid = await response.json();
-        await delay(50);
+        await delay(10);
         draw();
     };
 });
