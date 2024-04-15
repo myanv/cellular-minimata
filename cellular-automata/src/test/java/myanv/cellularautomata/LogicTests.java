@@ -12,27 +12,6 @@ class LogicTests {
 	// * Creates an input grid to be mutated and an expected output grid, then compare the two using assertArrayEquals
 
 	@Test
-	void testConwayLogic() {
-		State[][] inputGrid = { 
-			{ State.ALIVE, State.DEAD, State.ALIVE, State.ALIVE },
-			{ State.DEAD, State.ALIVE, State.DEAD, State.DEAD },
-			{ State.ALIVE, State.DEAD, State.ALIVE, State.DEAD }
-		};
-		
-		CellularAutomataGrid grid = new CellularAutomataGrid(inputGrid);
-		grid.mutate();
-		State[][] mutatedGrid = grid.getStateGrid();
-
-		State[][] expectedGrid = {
-			{ State.DEAD, State.ALIVE, State.ALIVE, State.DEAD },
-			{ State.ALIVE, State.DEAD, State.DEAD, State.ALIVE },
-			{ State.DEAD, State.ALIVE, State.DEAD, State.DEAD }
-		};
-		
-		assertArrayEquals(mutatedGrid, expectedGrid);
-	}
-
-	@Test
 	void testMutationLogic() {
 		State[][] inputGrid = { 
 			{ State.ALIVE, State.DEAD, State.ALIVE, State.ALIVE },

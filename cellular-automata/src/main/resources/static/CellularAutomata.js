@@ -3,7 +3,7 @@
 // Get the start button and define the canvas
 const startButton = document.getElementById("start-btn");
 const gridButton = document.getElementById("get-grid");
-let mouseOnCanvas = false;
+const newButton = document.getElementById("get-blank");
 
 // Default parameter values
 let rows = 25;
@@ -26,7 +26,24 @@ async function setup() {
     draw();
 }
 
-// Function to get a new random grid when grid button is clicked
+// Function to create a new blank grid when the new grid button is clicked
+newButton.addEventListener("click", async () => {
+    background(235);
+    rows = document.getElementById("rows").valueAsNumber;
+    columns = document.getElementById("columns").valueAsNumber;
+    resolution = document.getElementById("resolution").valueAsNumber;
+    const width = columns * resolution;
+    const height = rows * resolution;
+
+    resizeCanvas(width, height);
+    let response = await fetch(`/api/cellular-automata/emptygrid?rows=${rows}&columns=${columns}`, {
+        method: 'GET',
+    });
+    grid = await response.json();
+    draw();
+})
+
+// Function to get a new random grid when random grid button is clicked
 gridButton.addEventListener("click", async () => {
     background(235);
     rows = document.getElementById("rows").valueAsNumber;
@@ -120,6 +137,7 @@ function parseRuleset(rules) {
     return parsedRules;
 }
 
+// Function to change the state of the cell when pressed
 function mousePressed() {
     const i = Math.floor(mouseY / resolution);        
     const j = Math.floor(mouseX / resolution);

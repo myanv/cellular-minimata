@@ -43,13 +43,13 @@ public class CellularAutomataController {
     
     @GetMapping("/grid")
     public ResponseEntity<State[][]> getCellularAutomataGrid(@RequestParam int rows, @RequestParam int columns) {
-        CellularAutomataGrid grid = new CellularAutomataGrid(rows, columns);
+        CellularAutomataGrid grid = new CellularAutomataGrid(rows, columns, false);
         return ResponseEntity.ok(grid.getStateGrid());
     }
 
     @GetMapping("/emptygrid")
     public ResponseEntity<State[][]> getEmptyGrid(@RequestParam int rows, @RequestParam int columns) {
-        CellularAutomataGrid emptyGrid = new CellularAutomataGrid();
+        CellularAutomataGrid emptyGrid = new CellularAutomataGrid(rows, columns, true);
         return ResponseEntity.ok(emptyGrid.getStateGrid());
     }
 

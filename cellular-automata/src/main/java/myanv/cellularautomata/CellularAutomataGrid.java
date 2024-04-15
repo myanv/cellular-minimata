@@ -10,8 +10,8 @@ public class CellularAutomataGrid {
 
     // * Initialises the number of rows and columns, as well as the current/previous state grids.
     
-    private int rows = 10;
-    private int columns = 10;
+    private int rows = 25;
+    private int columns = 25;
     private State[][] stateGrid;
     private State[][] previousStateGrid;
 
@@ -28,10 +28,14 @@ public class CellularAutomataGrid {
 
     // * This constructor is intended to be used to create the very first state grid.
 
-    public CellularAutomataGrid(int rows, int columns) {
+    public CellularAutomataGrid(int rows, int columns, boolean empty) {
         this.rows = rows;
         this.columns = columns;
-        initialiseStateGrid();
+        if (empty) {
+            initialiseEmptyStateGrid();
+        } else {
+            initialiseRandomStateGrid();
+        }
         initialisePrevGrid();
     }
 
@@ -44,11 +48,20 @@ public class CellularAutomataGrid {
     // * Creates a state grid with the desired dimensions
     // * Then fill them with random 1s and 0s, representing the ALIVE or DEAD states of the cells. 
     
-    public void initialiseStateGrid() {
+    public void initialiseRandomStateGrid() {
         stateGrid = new State[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 stateGrid[i][j] = Math.random() > 0.5 ? State.ALIVE : State.DEAD;
+            }
+        }
+    }
+
+    public void initialiseEmptyStateGrid() {
+        stateGrid = new State[rows][columns];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                stateGrid[i][j] = State.DEAD;
             }
         }
     }
