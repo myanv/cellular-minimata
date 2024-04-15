@@ -12,7 +12,6 @@ body {
     float: left;
     display: fixed;
     padding-left: 10px;
-    margin-right: 100px;
 }
 
 input {
@@ -53,4 +52,5 @@ button:hover {
 canvas {
     position: fixed;
     overflow: hidden;
+    padding-left:50px;
 }

@@ -8,14 +8,14 @@ const newButton = document.getElementById("get-blank");
 // Default parameter values
 let rows = 25;
 let columns = 25;
-let resolution = 40;
+let resolution = 45;
 let steps = 250;
 let rules = document.getElementById("rules").value;
 let grid;
 
 // p5.js setup function, defining the default canvas and grid
 async function setup() {    
-    createCanvas(1000, 1000);
+    createCanvas(1135, 1000);
     const canvas = document.getElementById("defaultCanvas0");
 
     background(235);
