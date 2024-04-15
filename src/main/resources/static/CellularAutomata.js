@@ -70,7 +70,6 @@ startButton.addEventListener("click", async () => {
     
     for (let i = 0; i < steps; i++) {
         draw();
-        await delay(50);
         let response = await fetch(`/api/cellular-automata/mutate`, {
             method: 'POST',
             headers: {
@@ -82,7 +81,6 @@ startButton.addEventListener("click", async () => {
             })
         });
         grid = await response.json();
-        await delay(10);
         draw();
     };
 });
@@ -102,13 +100,6 @@ function draw() {
             }
         }
     }
-}
-
-// Defines the delay between each grid stages/mutations
-function delay(milliseconds) {
-    return new Promise(resolve => {
-        setTimeout(resolve, milliseconds);
-    });
 }
 
 // Parses the ruleset input into an array to be passed to the backend
