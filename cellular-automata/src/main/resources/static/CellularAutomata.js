@@ -137,8 +137,9 @@ function parseRuleset(rules) {
     return parsedRules;
 }
 
-// Function to change the state of the cell when pressed
-function mousePressed() {
+
+// Function to change the state of the cell when the mouse is clicked
+function mouseClicked() {
     const i = Math.floor(mouseY / resolution);        
     const j = Math.floor(mouseX / resolution);
     grid[i][j] = grid[i][j] == 'ALIVE' ? 'DEAD' : 'ALIVE';
