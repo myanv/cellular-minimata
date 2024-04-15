@@ -1,7 +1,7 @@
 <h1 align="center"> Cellular MiniMata</h1> 
 <br>
 
-![](image.png)
+![](repo.png)
 
 ## About the project
 This is a simple cellular automata simulator built with **Java Spring** and **JavaScript**. The user creates a custom two-dimensional grid filled with random cell states and specifies the depth (number of steps) they'd like to simulate, as well as the desired rules for the cellular automata. By default, the ruleset follows Conway's Game of Life.
