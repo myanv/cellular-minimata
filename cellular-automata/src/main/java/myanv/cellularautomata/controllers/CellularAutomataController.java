@@ -47,6 +47,12 @@ public class CellularAutomataController {
         return ResponseEntity.ok(grid.getStateGrid());
     }
 
+    @GetMapping("/emptygrid")
+    public ResponseEntity<State[][]> getEmptyGrid(@RequestParam int rows, @RequestParam int columns) {
+        CellularAutomataGrid emptyGrid = new CellularAutomataGrid();
+        return ResponseEntity.ok(emptyGrid.getStateGrid());
+    }
+
     // * HTTP request: POST
     // * Receives the body of an array (automatically parsing from JSON by @RequestBody) from the front-end and the ruleset, mutates it accordingly
     // * then returns the mutated state grid. 

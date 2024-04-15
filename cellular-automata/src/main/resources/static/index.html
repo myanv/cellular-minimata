@@ -17,9 +17,10 @@
         <label for="resolution">Enter the resolution:</label>
         <input type="number" name="resolution" id="resolution" value="40">
         <label for="steps">Enter the number of steps:</label>
-        <input type="number" name="steps" id="steps" value="150">
-        <label for="rules">Enter the rules for the cellular automata:</label>
-        <textarea name="rules" id="rules" cols="23" rows="15">alive &lt;2 dead&#13;&#10;alive ==2,3 alive&#13;&#10;alive &gt;3 dead&#13;&#10;dead ==3 alive</textarea>
+        <input type="number" name="steps" id="steps" value="250">
+        <label for="rules">Enter the rules for the cellular automata (for more info on the format, see the project's GitHub README):</label>
+        <textarea name="rules" id="rules" cols="23" rows="10">alive &lt;2 dead&#13;&#10;alive ==2,3 alive&#13;&#10;alive &gt;3 dead&#13;&#10;dead ==3 alive</textarea>
+        <button id="get-grid">Get random grid</button>
         <button id="start-btn">Start simulation</button>
     </div>
     <div id="canvas">

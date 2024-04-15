@@ -3,34 +3,58 @@
 // Get the start button and define the canvas
 const startButton = document.getElementById("start-btn");
 const gridContainer = document.getElementById("grid-container");
+const gridButton = document.getElementById("get-grid");
 
 // Default parameter values
 let rows = 25;
 let columns = 25;
 let resolution = 40;
-let steps = 150;
+let steps = 250;
 let rules = document.getElementById("rules").value;
+let grid;
 
-// Function to handle the start button click
-startButton.addEventListener("click", async () => {
+// p5.js setup function, defining the default canvas and grid
+async function setup() {    
+    createCanvas(1000, 1000);
+    background(235);
+    let response = await fetch(`/api/cellular-automata/grid?rows=${rows}&columns=${columns}`, {
+        method: 'GET',
+    });
+    grid = await response.json();
+    draw(grid);
+    
+}
+
+// Function to get a new random grid when grid button is clicked
+gridButton.addEventListener("click", async () => {
+    background(235);
     rows = document.getElementById("rows").valueAsNumber;
     columns = document.getElementById("columns").valueAsNumber;
     resolution = document.getElementById("resolution").valueAsNumber;
+    const width = columns * resolution;
+    const height = rows * resolution;
+
+    resizeCanvas(width, height);
+    let response = await fetch(`/api/cellular-automata/grid?rows=${rows}&columns=${columns}`, {
+        method: 'GET',
+    });
+    grid = await response.json();
+    draw();
+});
+
+// Function to handle the start simulator button click
+startButton.addEventListener("click", async () => {
+    background(235);
     steps = document.getElementById("steps").valueAsNumber;
     rules = document.getElementById("rules").value;
 
     let ruleset = parseRuleset(rules);
     
-    // Create a dynamic canvas using the p5.js library
-    createCanvas(columns * resolution, rows * resolution);
-
-    let response = await fetch(`/api/cellular-automata/grid?rows=${rows}&columns=${columns}`, { method: 'GET' });
-    let grid = await response.json();
-
-    draw(grid);
-    
-    for (let i = 0; i < steps; i++) { 
-        response = await fetch(`/api/cellular-automata/mutate`, {
+    for (let i = 0; i < steps; i++) {
+        draw();
+        await delay(50);
+        console.table(grid);
+        let response = await fetch(`/api/cellular-automata/mutate`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -41,13 +65,15 @@ startButton.addEventListener("click", async () => {
             })
         });
         grid = await response.json();
-        await delay(100);
-        draw(grid);
+        await delay(50);
+        draw();
     };
 });
 
-function draw(grid) {
-    background(255);
+
+// p5.js draw function to draw the 2D array
+function draw() {
+    background(235);
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < columns; j++) {
             let y = i * resolution;
@@ -61,12 +87,15 @@ function draw(grid) {
     }
 }
 
+// Defines the delay between each grid stages/mutations
 function delay(milliseconds) {
     return new Promise(resolve => {
         setTimeout(resolve, milliseconds);
     });
 }
 
+// Parses the ruleset input into an array to be passed to the backend
+// and carries out response validation.
 function parseRuleset(rules) {
     const ruleset = rules.split(/\n+/);
     const parsedRules = [];
