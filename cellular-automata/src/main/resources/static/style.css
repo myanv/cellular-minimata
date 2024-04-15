@@ -6,16 +6,17 @@ body {
 
 #options {
     z-index: 99;
-    width: 220px;
+    width: 250px;
     height: 100vh;
     background-image: linear-gradient(rgb(164, 224, 220), rgb(164, 183, 226));
     float: left;
     display: fixed;
     padding-left: 10px;
+    margin-right: 100px;
 }
 
 input {
-    width: 185px;
+    width: 200px;
 }
 
 h1 {
@@ -25,7 +26,7 @@ h1 {
 
 h3 {
     margin-top: 5px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 input, textarea, button {
@@ -34,7 +35,13 @@ input, textarea, button {
     border-radius: 5px;
 }
 
+label {
+    display: block;
+    margin: 3px 0;
+}
+
 button {
+    display: block;
     padding: 8px;
     font-weight: bold;
 }
@@ -46,5 +53,4 @@ button:hover {
 canvas {
     position: fixed;
     overflow: hidden;
-    margin-left: 100px;
 }

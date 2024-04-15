@@ -2,8 +2,8 @@
 
 // Get the start button and define the canvas
 const startButton = document.getElementById("start-btn");
-const gridContainer = document.getElementById("grid-container");
 const gridButton = document.getElementById("get-grid");
+let mouseOnCanvas = false;
 
 // Default parameter values
 let rows = 25;
@@ -16,13 +16,14 @@ let grid;
 // p5.js setup function, defining the default canvas and grid
 async function setup() {    
     createCanvas(1000, 1000);
+    const canvas = document.getElementById("defaultCanvas0");
+
     background(235);
     let response = await fetch(`/api/cellular-automata/grid?rows=${rows}&columns=${columns}`, {
         method: 'GET',
     });
     grid = await response.json();
-    draw(grid);
-    
+    draw();
 }
 
 // Function to get a new random grid when grid button is clicked
@@ -53,7 +54,6 @@ startButton.addEventListener("click", async () => {
     for (let i = 0; i < steps; i++) {
         draw();
         await delay(50);
-        console.table(grid);
         let response = await fetch(`/api/cellular-automata/mutate`, {
             method: 'POST',
             headers: {
@@ -118,4 +118,12 @@ function parseRuleset(rules) {
         
         }
     return parsedRules;
+}
+
+function mousePressed() {
+    const i = Math.floor(mouseY / resolution);        
+    const j = Math.floor(mouseX / resolution);
+    grid[i][j] = grid[i][j] == 'ALIVE' ? 'DEAD' : 'ALIVE';
+    draw();
+    return false;
 }

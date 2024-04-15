@@ -18,13 +18,11 @@
         <input type="number" name="resolution" id="resolution" value="40">
         <label for="steps">Enter the number of steps:</label>
         <input type="number" name="steps" id="steps" value="250">
-        <label for="rules">Enter the rules for the cellular automata (for more info on the format, see the project's GitHub README):</label>
-        <textarea name="rules" id="rules" cols="23" rows="10">alive &lt;2 dead&#13;&#10;alive ==2,3 alive&#13;&#10;alive &gt;3 dead&#13;&#10;dead ==3 alive</textarea>
+        <label for="rules">Enter the rules (for more info on the format, see the project's GitHub README):</label>
+        <textarea name="rules" id="rules" cols="26" rows="8">alive &lt;2 dead&#13;&#10;alive ==2,3 alive&#13;&#10;alive &gt;3 dead&#13;&#10;dead ==3 alive</textarea>
+        <button id="get-blank">Get blank grid</button>
         <button id="get-grid">Get random grid</button>
         <button id="start-btn">Start simulation</button>
-    </div>
-    <div id="canvas">
-        <div id="grid-container"></div>
     </div>
 
     <!-- JavaScript files, including p5.js -->
